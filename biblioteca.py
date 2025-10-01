@@ -1,11 +1,54 @@
 def carica_da_file(file_path):
     """Carica i libri dal file"""
-    # TODO
+    library = {}
+    try:
+        with open(file_path, "r", encoding="utf-8") as infile:
+            infile.readline()
+            lines = infile.readlines()
+            for line in lines:
+                title, author, publ_year, pages, section = line.strip().split(",")
+
+            if section not in library:
+                library[section] = []
+
+            bookInfo = {
+                'titolo': title,
+                'autore': author,
+                'anno': publ_year,
+                'pagine': pages
+            }
+
+            library[section].append(bookInfo)
+    except FileNotFoundError:
+        return None
+
+    return library
 
 
 def aggiungi_libro(biblioteca, titolo, autore, anno, pagine, sezione, file_path):
     """Aggiunge un libro nella biblioteca"""
-    # TODO
+
+    '''CHIEDERE SE L'AGGIUTNTA DI UN NUOVO LIBRO 
+    DEBBA CONTROLLARE TUTTI I PARAMETRI SIMULTANEAMENTE'''
+
+    try:
+        libro = {
+            'titolo': titolo,
+            'autore': autore,
+            'anno': anno,
+            'pagine': pagine
+        }
+        if libro not in biblioteca[sezione]:
+            biblioteca[sezione].append(libro)
+        else:
+            return None
+
+    except FileNotFoundError:
+        return None
+    except KeyError:
+        return None
+
+    return True
 
 
 def cerca_libro(biblioteca, titolo):
